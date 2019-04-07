@@ -17,4 +17,4 @@ score DNS_FROM_RFC_BOGUSMX 0
 score __DNS_FROM_RFC_POST 0
 score __DNS_FROM_RFC_ABUSE 0
 score __DNS_FROM_RFC_WHOIS 0
-
+#rewrite_header Subject *****SPAM*****
