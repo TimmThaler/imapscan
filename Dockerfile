@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:stable-slim
 
 # timezone name that can be overridden when building the container
 ARG CTNR_TZ=UTC
@@ -13,8 +13,6 @@ ENV CTNR_TZ=${CTNR_TZ}
 RUN apt-get update && \
     apt-get install -y \
       cron \
-      imapfilter \
-      nano \
       python \
       python-pip \
       python-setuptools \
@@ -47,7 +45,6 @@ ADD files/* /root/
 
 # prepare directories and files
 RUN mkdir /root/accounts ; \
-    mkdir /root/.imapfilter ; \
     mkdir -p /var/spamassassin/bayesdb ; \
     chown -R debian-spamd:mail /var/spamassassin ; \
     chmod u+x startup ; \
@@ -71,7 +68,6 @@ RUN mkdir /root/accounts ; \
 
 # volumes
 VOLUME /var/spamassassin
-VOLUME /root/.imapfilter
 VOLUME /root/accounts
 
 CMD /root/startup && tail -n 0 -F /var/log/*.log
