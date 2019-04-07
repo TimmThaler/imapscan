@@ -52,8 +52,8 @@ service rsyslog start
   logger "starting spamassassin"
   service spamassassin start
 
-  echo "running learm_spam"
-  ./learn_spam.sh
+  echo "running learn_spam"
+  ./spam_learn.sh
 
   echo "starting CRON"
   service cron start
