@@ -1,14 +1,17 @@
 #! /bin/bash
 
+DOCKER_IMAGE_NAME=myISBG
+DOCKER_IMAGE_TAG=latest
 IMAPUSER=example
-CONTAINER_VOLUMES_DIR=${HOME}/docker_volumes/imapscan
+CONTAINER_VOLUMES_DIR=${PWD}/data
+
+
+docker build -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG .
 
 mkdir ${CONTAINER_VOLUMES_DIR}/spamassassin 2>/dev/null
 mkdir ${CONTAINER_VOLUMES_DIR}/accounts 2>/dev/null
-mkdir ${CONTAINER_VOLUMES_DIR}/imapfilter 2>/dev/null
 
-docker run -d --rm --name imapscan_${IMAPUSER} \
+docker run -d --rm --name isbg_${IMAPUSER} \
 	-v ${CONTAINER_VOLUMES_DIR}/spamassassin:/var/spamassassin \
-	-v ${CONTAINER_VOLUMES_DIR}/imapfilter:/root/.imapfilter \
 	-v ${CONTAINER_VOLUMES_DIR}/accounts:/root/accounts \
-	domcomte/imapscan:latest
+	$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG
