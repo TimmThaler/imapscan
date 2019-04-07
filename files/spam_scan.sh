@@ -27,7 +27,7 @@ if [ -f "${file}" ]; then
     #printf ">[%s]\n" "${account[@]}"
     IFS=${OLD_IFS}
     echo "scanning spam in ${account[1]}/${account[3]} and ham in ${account[1]}/${account[4]}"
-    until /usr/local/bin/isbg.py --noninteractive --flag --spamc \
+    until /usr/local/bin/isbg.py --noninteractive --spamc --delete \
         --imaphost ${account[0]} --imapuser "${account[1]}"  --imappasswd "${account[2]}" \
         --spaminbox "${account[3]}" \
         --imapinbox "${account[4]}"
@@ -36,9 +36,5 @@ if [ -f "${file}" ]; then
     done
     echo "scanning of spam in ${account[1]}/${account[3]} and ham in ${account[1]}/${account[4]} done"
   done < "$file"
-  until imapfilter
-  do
-    echo "imapfilter failed, retrying..."
-  done
   echo "EOS"
 fi
